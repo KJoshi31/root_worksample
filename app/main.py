@@ -2,6 +2,7 @@ import sys
 from input_validator import argument_validator
 from report_engine import ReportEngine
 
+
 try:
     file_name = sys.argv[1]
     fp = open(file_name)

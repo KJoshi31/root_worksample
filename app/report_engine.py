@@ -1,8 +1,5 @@
 from models import Driver, Trip
-from input_validator import ValidArgs
-
-DRIVER = 'Driver'
-TRIP = 'Trip'
+from consts import DRIVER, TRIP
 
 class ReportEngine:
     
