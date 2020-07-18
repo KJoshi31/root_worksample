@@ -63,14 +63,58 @@ class ReportEngine:
                 if key.name == text_trip_driver:
                     self.object_data[key].append(new_trip)
 
+        for driver_obj, trip_list in self.object_data.items():
+
+            for trip in trip_list:
+                driver_obj.add_trip(trip)
+
 
     def generate_report(self):
-        print(self.object_data)
 
+        report_str = ""
+        driver_data_list = self.get_data_list_by_miles()
+
+        for driver_data in driver_data_list:
+
+            report_str = report_str + driver_data['name'] + ':'
+
+            if driver_data['miles']>0 and driver_data['mph']>0:
+                report_str += '\t'+ str(driver_data['miles'])
+                report_str += ' miles' + ' @ '
+                report_str += str( driver_data['mph'] ) + ' mph'
+                report_str += '\n'
+            else:
+                report_str += '\t'+ str(0)
+                report_str += ' miles'
+                report_str += '\n'
+
+
+        print(report_str)
+
+    def get_data_list_by_miles(self):
+        mile_dict = dict()
         for driver_obj, trip_list in self.object_data.items():
-            print(driver_obj.name)
+            
+            if driver_obj.name not in mile_dict:
+                mile_dict[driver_obj] = None
+            
+            miles, mins = driver_obj.get_trip_totals()
+            mile_dict[driver_obj] = miles
+        
+        sorted_rank = {k: v for k, v in sorted(mile_dict.items(), key=lambda item: item[1], reverse=True)}
 
-            driver_obj.get_trip_totals()
-                
+        scrubbed_data = list()
+        for driver_obj, miles in sorted_rank.items():
+            temp_dict = dict()
+            miles, mins = driver_obj.get_trip_totals()
 
+            temp_dict['name'] = driver_obj.name
+            temp_dict['miles'] = round(miles)
+            if miles > 0:
+                temp_dict['mph'] = round((miles/mins) * 60)
+            else:
+                temp_dict['mph'] = 0
+            scrubbed_data.append(temp_dict)
+
+        return (scrubbed_data)
 

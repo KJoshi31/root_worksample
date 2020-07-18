@@ -19,7 +19,7 @@ class Driver:
             total_mins = total_mins + trip.get_time_minutes()
             total_miles = total_miles + trip.distance
 
-        print(total_mins, total_miles)
+        return total_miles, total_mins
 
 class Trip:
     
