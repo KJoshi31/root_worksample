@@ -63,4 +63,14 @@ class ReportEngine:
                 if key.name == text_trip_driver:
                     self.object_data[key].append(new_trip)
 
-        self.print_object_data()
+
+    def generate_report(self):
+        print(self.object_data)
+
+        for driver_obj, trip_list in self.object_data.items():
+            print(driver_obj.name)
+
+            driver_obj.get_trip_totals()
+                
+
+
