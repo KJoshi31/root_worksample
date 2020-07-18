@@ -72,7 +72,7 @@ class ReportEngine:
     def generate_report(self):
 
         report_str = ""
-        driver_data_list = self.get_data_list_by_miles()
+        driver_data_list = self.get_flat_object_data()
 
         for driver_data in driver_data_list:
 
@@ -89,9 +89,9 @@ class ReportEngine:
                 report_str += '\n'
 
 
-        print(report_str)
+        return report_str
 
-    def get_data_list_by_miles(self):
+    def sort_object_data_transform(self):
         mile_dict = dict()
         for driver_obj, trip_list in self.object_data.items():
             
@@ -102,6 +102,12 @@ class ReportEngine:
             mile_dict[driver_obj] = miles
         
         sorted_rank = {k: v for k, v in sorted(mile_dict.items(), key=lambda item: item[1], reverse=True)}
+
+        return sorted_rank
+
+
+    def get_flat_object_data(self): 
+        sorted_rank = self.sort_object_data_transform()
 
         scrubbed_data = list()
         for driver_obj, miles in sorted_rank.items():
@@ -116,5 +122,4 @@ class ReportEngine:
                 temp_dict['mph'] = 0
             scrubbed_data.append(temp_dict)
 
-        return (scrubbed_data)
-
+        return scrubbed_data

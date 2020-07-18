@@ -19,4 +19,5 @@ if not valid:
 else:
     re = ReportEngine()
     re.object_loader(command_array)
-    re.generate_report()
+    report_data = re.generate_report()
+    print(report_data)
