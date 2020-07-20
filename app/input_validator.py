@@ -2,6 +2,9 @@ from consts import DRIVER, TRIP
 
 
 def argument_validator(input_list):
+    if len(input_list)==0:
+        return False
+
     for arg in input_list:
         arg_word_list = arg.split()
         arg_word_list[0] = arg_word_list[0].lower().capitalize().strip()
