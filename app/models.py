@@ -1,5 +1,6 @@
 import datetime
 
+
 class Driver:
     def __init__(self, name):
         self.name = name
@@ -21,15 +22,16 @@ class Driver:
 
         return total_miles, total_mins
 
+
 class Trip:
-    
+
     def __init__(self, start_time, end_time, distance):
-        self.start_time = (start_time)
-        self.end_time = (end_time)
+        self.start_time = start_time
+        self.end_time = end_time
         self.distance = self.convert_dist_to_flt(distance)
 
     def get_time_as_datetime(self, time_str):
-        date_obj =datetime.datetime.strptime(time_str, '%H:%M')
+        date_obj = datetime.datetime.strptime(time_str, '%H:%M')
         return date_obj
 
     def get_time_minutes(self):
@@ -38,11 +40,6 @@ class Trip:
 
         minutes = (end_date_obj-start_date_obj).total_seconds() / 60.0
         return minutes
-
-    def get_trip_mph(self):
-        mins = self.get_time_minutes()
-        mph = (self.distance / mins) * 60
-        return mph
 
     def convert_dist_to_flt(cls, distance):
         return float(distance)
