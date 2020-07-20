@@ -10,20 +10,6 @@ class ReportEngine:
     def get_object_data(self):
         return self.object_data
     
-    def print_object_data(self):
-
-            rep_str = ""
-
-            for key,value in self.object_data.items():
-                rep_str = rep_str+key.name + '\n'
-                
-                for item in value:
-                    rep_str=rep_str+ '\t' + str(item.start_time)
-                    rep_str=rep_str+ '\t' + str(item.end_time)
-                    rep_str=rep_str+ '\t' + str(item.distance)+'\n'
-
-            print(rep_str)
-
 
     def object_loader(self, input_data):
         driver_list = list()
@@ -36,7 +22,6 @@ class ReportEngine:
                 driver_list.append(input)
             elif input_words[0].lower().capitalize() == TRIP:
                 trip_list.append(input)
-
         
         for driver_text in driver_list:
             driver_data = driver_text.split()
@@ -46,7 +31,6 @@ class ReportEngine:
                 new_driver = Driver(driver_name)
                 self.object_data[new_driver] = list()
 
-        # print(self.object_data)
 
         for trip_text in trip_list:
             trip_data = trip_text.split()
@@ -71,10 +55,12 @@ class ReportEngine:
 
     def generate_report(self):
 
-        report_str = ""
-        driver_data_list = self.get_flat_object_data()
+        driver_data_list = self.get_drivers_list_by_mile_total()
+        flattened_driver_data = self.get_flat_data_hash_list(driver_data_list)
 
-        for driver_data in driver_data_list:
+        report_str = ""
+
+        for driver_data in flattened_driver_data:
 
             report_str = report_str + driver_data['name'] + ':'
 
@@ -91,7 +77,7 @@ class ReportEngine:
 
         return report_str
 
-    def sort_object_data_transform(self):
+    def get_drivers_list_by_mile_total(self):
         mile_dict = dict()
         for driver_obj, trip_list in self.object_data.items():
             
@@ -102,24 +88,26 @@ class ReportEngine:
             mile_dict[driver_obj] = miles
         
         sorted_rank = {k: v for k, v in sorted(mile_dict.items(), key=lambda item: item[1], reverse=True)}
+        sorted_list = [driver for driver, mile in sorted_rank.items() ]
 
-        return sorted_rank
+        return sorted_list
 
 
-    def get_flat_object_data(self): 
-        sorted_rank = self.sort_object_data_transform()
+    def get_flat_data_hash_list(self, sorted_driver_list): 
 
-        scrubbed_data = list()
-        for driver_obj, miles in sorted_rank.items():
-            temp_dict = dict()
-            miles, mins = driver_obj.get_trip_totals()
-
-            temp_dict['name'] = driver_obj.name
+        flat_data_hash_list = list()
+        for driver in sorted_driver_list:
+            temp_dict=dict()
+            
+            miles, mins = driver.get_trip_totals()
+            
+            temp_dict['name'] = driver.name
             temp_dict['miles'] = round(miles)
+            
             if miles > 0:
                 temp_dict['mph'] = round((miles/mins) * 60)
             else:
                 temp_dict['mph'] = 0
-            scrubbed_data.append(temp_dict)
+            flat_data_hash_list.append(temp_dict)
 
-        return scrubbed_data
+        return flat_data_hash_list
