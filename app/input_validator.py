@@ -2,7 +2,7 @@ from consts import DRIVER, TRIP
 
 
 def argument_validator(input_list):
-    if len(input_list)==0:
+    if len(input_list) == 0:
         return False
 
     for arg in input_list:
