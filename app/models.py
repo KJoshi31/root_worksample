@@ -7,6 +7,9 @@ class Driver:
         self.trips = list()
 
     def add_trip(self, trip):
+        if type(trip) not Trip:
+            raise Exception("need to input Trip obj")
+
         self.trips.append(trip)
 
     def get_trips(self):

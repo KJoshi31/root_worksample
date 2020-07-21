@@ -4,7 +4,7 @@ This project is a work-sample written in Python for candidate assessement by Roo
 </br>
 
 #### Table of Contents  
-1. [Installation](#installation) 
+1. [Setup](#setup) 
     1. [Software Needed](#software-needed)
     2. [Installation Steps](#Installation-Steps)
 2. [Usage](#Usage)  
@@ -12,7 +12,7 @@ This project is a work-sample written in Python for candidate assessement by Roo
     2. [Test Execution](#test-execution)
 3. [Expected Output](#expected-output)
 
-# Installation
+# Setup
 
 ## Software Needed: 
 - [Python3](https://www.python.org/downloads/): language used 
