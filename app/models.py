@@ -7,8 +7,8 @@ class Driver:
         self.trips = list()
 
     def add_trip(self, trip):
-        if type(trip) not Trip:
-            raise Exception("need to input Trip obj")
+        if not isinstance(trip, Trip):
+            raise Exception('is not a valid Trip object')
 
         self.trips.append(trip)
 
@@ -29,20 +29,30 @@ class Driver:
 class Trip:
 
     def __init__(self, start_time, end_time, distance):
-        self.start_time = start_time
-        self.end_time = end_time
+        self.start_time = self.get_time_as_datetime(start_time)
+        self.end_time = self.get_time_as_datetime(end_time)
         self.distance = self.convert_dist_to_flt(distance)
 
-    def get_time_as_datetime(self, time_str):
-        date_obj = datetime.datetime.strptime(time_str, '%H:%M')
+    @classmethod
+    def get_time_as_datetime(cls, time_str):
+        try:
+            date_obj = datetime.datetime.strptime(time_str, '%H:%M')
+        except:
+            raise Exception('time string is not correct format')
+
         return date_obj
 
     def get_time_minutes(self):
-        start_date_obj = self.get_time_as_datetime(self.start_time)
-        end_date_obj = self.get_time_as_datetime(self.end_time)
-
+        start_date_obj = self.start_time
+        end_date_obj = self.end_time
         minutes = (end_date_obj-start_date_obj).total_seconds() / 60.0
         return minutes
 
+    @classmethod
     def convert_dist_to_flt(cls, distance):
-        return float(distance)
+        try:
+            float_distance = float(distance)
+        except:
+            raise Exception('distance is not correct format')
+
+        return float_distance
