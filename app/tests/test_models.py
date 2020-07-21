@@ -43,7 +43,7 @@ class TestDriver:
 
     def test_create_driver_with_invalid_trip(self, create_driver):
         d = create_driver
-        t = "lkl"
+        t = "abc"
         with pytest.raises(Exception) as e:
             d.add_trip(t)
 
@@ -89,3 +89,14 @@ class TestTrip:
         dist_string = "35.5"
         distance_flt = Trip.convert_dist_to_flt(dist_string)
         assert type(distance_flt) == float
+
+    def test_get_time_invalid_str(self):
+        time_string = "abc"
+        with pytest.raises(Exception) as e:
+            date_obj = Trip.get_time_as_datetime(time_string)
+
+    def test_convert_dist_invalid(self):
+        dist_string = "abc"
+
+        with pytest.raises(Exception) as e:
+            distance_flt = Trip.convert_dist_to_flt(dist_string)
