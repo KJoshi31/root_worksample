@@ -55,3 +55,33 @@ class TestReportEngine:
         obj_data = new_re.get_object_data()
 
         assert(len(obj_data.keys())) == 0
+
+    def test_default_obj_list_by_mile_order(self, report_engine_default_obj_data):
+        sorted_list = report_engine_default_obj_data.get_drivers_list_by_mile_total()
+        driver1 = sorted_list[0]
+        driver2 = sorted_list[1]
+        driver3 = sorted_list[2]
+
+        assert len(sorted_list) == 3
+        assert driver1.name == 'Lauren'
+        assert driver2.name == 'Dan'
+        assert driver3.name == 'Kumi'
+        assert driver1.get_trip_totals()[0] > driver2.get_trip_totals()[0]
+        assert driver2.get_trip_totals()[0] > driver3.get_trip_totals()[0]
+        assert driver1.get_trip_totals()[0] > driver3.get_trip_totals()[0]
+
+    def test_default_obj_flat_data_hash_list(self, report_engine_default_obj_data):
+        driver_data_list = report_engine_default_obj_data.get_drivers_list_by_mile_total()
+        flattened_driver_data = report_engine_default_obj_data.get_flat_data_hash_list(driver_data_list)
+
+        assert type(flattened_driver_data) == list
+
+        for data_dict in flattened_driver_data:
+            assert type(data_dict) == dict
+            
+            keys = data_dict.keys()
+            for key in keys:
+                assert 'name' in keys
+                assert 'miles' in keys
+                assert 'mph' in keys
+
