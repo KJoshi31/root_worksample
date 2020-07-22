@@ -20,7 +20,7 @@ This project is a work-sample written in Python for candidate assessement by Roo
 - [Python3](https://www.python.org/downloads/): language used 
 - [pip (linux)](https://www.tecmint.com/install-pip-in-linux/)
 or [pip (windows)](https://pip.pypa.io/en/stable/installing/#do-i-need-to-install-pip) or [pip (macos)](https://www.poftut.com/how-to-install-pip-on-macos/): python package manager
-- [Virtualenv pip package](https://virtualenv.pypa.io/en/latest/): used to create virtual environments for python packages
+- [Virtualenv pip package](https://virtualenv.pypa.io/en/latest/): pip package used to create virtual environments for python projects 
 
 ## Installation Steps:
 The following steps assume that the user has installed Python3 in their respective operating system, as well as pip.
@@ -61,10 +61,14 @@ pip install -r requirements.txt
 ```
 
 To exit the virtual environment, please type the following command anywhere in the command line
+```bash
+deactivate
+```
+
 # Usage
 
 ### Program Execution
-Assumption is made that the user passes the file from the command line. The [main.py](https://github.com/KJoshi31/root_worksample/blob/master/app/main.py) in the app folder is the entry point of the application.
+Assumption is made that the user passes the file from the command line. The <span>main.py</span> in the app folder is the entry point of the application.
 ```bash
 python3 app/main.py input.txt
 ```
@@ -93,13 +97,13 @@ Kumi:   0 miles
 The approach or methodology towards this problem was to break down the key pieces/components into modular and reusable pieces of code that could be extended upon if need be. 
 
 ## Files
-main.py is the entrypoint of the program which uses other modules of the application to successfully output the reporting data to the end-user. 
+[main.py](https://github.com/KJoshi31/root_worksample/blob/master/app/main.py) is the entrypoint of the program which uses other modules of the application to successfully output the reporting data to the end-user. 
 
-consts.py contains constants used in the application, specifically Driver and Trip representations for determining the command from the input file.
+[consts.py](https://github.com/KJoshi31/root_worksample/blob/master/app/consts.py) contains constants used in the application, specifically Driver and Trip representations for determining the command from the input file.
 
-input_validator.py takes the contents of the file read by the main.py file to validate whether the arguments are valid to be used by the report_engine.py file.
+[input_validator.py](https://github.com/KJoshi31/root_worksample/blob/master/app/input_validator.py) takes the contents of the file read by the main file to validate whether the arguments are formatted correctly to be used by the report_engine.py file.
 
-models.py houses the classes, Drive and Trip. These classes are reprentations of the drivers and trips that are incoming from the input file. 
+[models.py](https://github.com/KJoshi31/root_worksample/blob/master/app/models.py) houses the classes, Drive and Trip. These classes are reprentations of the drivers and trips that are incoming from the input file. 
 
-report_engine.py houses the ReportEngine class which digests the data from the input file by parsing the commands and creating Driver and Trip objects. Afterwards, ReportEngine creates a structure to be used for additional sorting operations, and then is able to output a string representation of the report. 
+[report_engine.py](https://github.com/KJoshi31/root_worksample/blob/master/app/report_engine.py) houses the ReportEngine class which digests the data from the input file by parsing the commands and creating Driver and Trip objects. Afterwards, ReportEngine creates a structure to be used for additional sorting operations, and then is able to output a string representation of the report. 
 
