@@ -90,3 +90,55 @@ class TestReportEngine:
                 assert 'name' in keys
                 assert 'miles' in keys
                 assert 'mph' in keys
+
+    def test_obj_list_by_mile_order_only_drivers(self, report_engine_only_drivers):
+        sorted_list = report_engine_only_drivers[0].get_drivers_list_by_mile_total(
+        )
+        driver1 = sorted_list[0]
+        driver2 = sorted_list[1]
+        driver3 = sorted_list[2]
+
+        assert len(sorted_list) == 3
+        assert driver1.name == 'Dan'
+        assert driver2.name == 'Lauren'
+        assert driver3.name == 'Kumi'
+        assert driver1.get_trip_totals()[0] == driver2.get_trip_totals()[0]
+        assert driver2.get_trip_totals()[0] == driver3.get_trip_totals()[0]
+        assert driver1.get_trip_totals()[0] == driver3.get_trip_totals()[0]
+
+    def test_only_drivers_flat_data_hash_list(self, report_engine_only_drivers):
+        report_eng_obj, input_list = report_engine_only_drivers
+        driver_data_list = report_eng_obj.get_drivers_list_by_mile_total()
+        flattened_driver_data = report_eng_obj.get_flat_data_hash_list(
+            driver_data_list)
+
+        assert type(flattened_driver_data) == list
+
+        for data_dict in flattened_driver_data:
+            assert type(data_dict) == dict
+
+            keys = data_dict.keys()
+            for key in keys:
+                assert 'name' in keys
+                assert 'miles' in keys
+                assert 'mph' in keys
+
+            if 'mph' in keys:
+                assert data_dict['mph'] == 0
+            if 'miles' in keys:
+                assert data_dict['miles'] == 0
+
+    def test_obj_list_by_mile_order_only_trips(self, report_engine_only_trips):
+        sorted_list = report_engine_only_trips[0].get_drivers_list_by_mile_total(
+        )
+
+        assert len(sorted_list) == 0
+
+    def test_only_trips_flat_data_hash_list(self, report_engine_only_trips):
+        report_eng_obj, input_list = report_engine_only_trips
+        driver_data_list = report_eng_obj.get_drivers_list_by_mile_total()
+        flattened_driver_data = report_eng_obj.get_flat_data_hash_list(
+            driver_data_list)
+
+        assert type(flattened_driver_data) == list
+        assert len(flattened_driver_data) == 0
