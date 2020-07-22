@@ -11,6 +11,8 @@ This project is a work-sample written in Python for candidate assessement by Roo
     1. [Program Execution](#program-execution)
     2. [Test Execution](#test-execution)
 3. [Expected Output](#expected-output)
+4. [Approach](#approach)
+    1. [Files](#Files)
 
 # Setup
 
@@ -59,10 +61,10 @@ pip install -r requirements.txt
 ```
 
 To exit the virtual environment, please type the following command anywhere in the command line
-## Usage
+# Usage
 
 ### Program Execution
-Assumption is made that the user passes the file from the command line.
+Assumption is made that the user passes the file from the command line. The [main.py](https://github.com/KJoshi31/root_worksample/blob/master/app/main.py) in the app folder is the entry point of the application.
 ```bash
 python3 app/main.py input.txt
 ```
@@ -86,3 +88,18 @@ Lauren: 42 miles @ 34 mph
 Dan:    39 miles @ 47 mph
 Kumi:   0 miles
 ```
+
+# Approach
+The approach or methodology towards this problem was to break down the key pieces/components into modular and reusable pieces of code that could be extended upon if need be. 
+
+## Files
+main.py is the entrypoint of the program which uses other modules of the application to successfully output the reporting data to the end-user. 
+
+consts.py contains constants used in the application, specifically Driver and Trip representations for determining the command from the input file.
+
+input_validator.py takes the contents of the file read by the main.py file to validate whether the arguments are valid to be used by the report_engine.py file.
+
+models.py houses the classes, Drive and Trip. These classes are reprentations of the drivers and trips that are incoming from the input file. 
+
+report_engine.py houses the ReportEngine class which digests the data from the input file by parsing the commands and creating Driver and Trip objects. Afterwards, ReportEngine creates a structure to be used for additional sorting operations, and then is able to output a string representation of the report. 
+

@@ -7,28 +7,28 @@ def default_correct_input():
     input_str = 'Driver Dan\nDriver Lauren\nDriver Kumi\n' +\
         'Trip Dan 07:15 07:45 17.3\nTrip Dan 06:12 06:32 21.8\nTrip Lauren 12:01 13:16 42.0'
 
-    return input_str.split('\n')
+    return input_str
 
 
 @pytest.fixture
 def empty_input():
     input_str = ""
 
-    return input_str.split('\n')
+    return input_str
 
 
 @pytest.fixture
 def only_drivers_input():
     input_str = 'Driver Dan\nDriver Lauren\nDriver Kumi'
 
-    return input_str.split('\n')
+    return input_str
 
 
 @pytest.fixture
 def only_trips_input():
     input_str = 'Trip Dan 07:15 07:45 17.3\nTrip Dan 06:12 06:32 21.8\nTrip Lauren 12:01 13:16 42.0'
 
-    return input_str.split('\n')
+    return input_str
 
 
 def test_correct_input(default_correct_input):

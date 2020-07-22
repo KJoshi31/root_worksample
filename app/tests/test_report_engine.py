@@ -12,21 +12,24 @@ class TestReportEngine:
 
     @pytest.fixture
     def report_engine_default_obj_data(self, default_correct_input):
+        default_correct_list = default_correct_input.split('\n')
         report_engine = ReportEngine()
-        report_engine.object_loader(default_correct_input)
-        return report_engine
+        report_engine.object_loader(default_correct_list)
+        return report_engine, default_correct_list
 
     @pytest.fixture
     def report_engine_only_drivers(self, only_drivers_input):
+        only_drivers_list = only_drivers_input.split('\n')
         report_engine = ReportEngine()
-        report_engine.object_loader(only_drivers_input)
-        return report_engine
+        report_engine.object_loader(only_drivers_list)
+        return report_engine, only_drivers_list
 
     @pytest.fixture
     def report_engine_only_trips(self, only_trips_input):
+        only_trip_list = only_trips_input.split('\n')
         report_engine = ReportEngine()
-        report_engine.object_loader(only_trips_input)
-        return report_engine
+        report_engine.object_loader(only_trip_list)
+        return report_engine, only_trip_list
 
     def test_create_report_engine(self, create_report_engine):
         new_re = create_report_engine
@@ -38,26 +41,27 @@ class TestReportEngine:
         assert type(obj_data) == dict
         assert len(obj_data.keys()) == 0
 
-    def test_report_engine_default_obj_data(self, report_engine_default_obj_data, default_correct_input):
-        new_re = report_engine_default_obj_data
+    def test_report_engine_default_obj_data(self, report_engine_default_obj_data):
+        new_re, input_list = report_engine_default_obj_data
         obj_data = new_re.get_object_data()
 
-        assert(len(obj_data.keys())) == len(default_correct_input) - 3
+        assert(len(obj_data.keys())) == len(input_list) - 3
 
-    def test_report_engine_only_drivers(self, report_engine_only_drivers, only_drivers_input):
-        new_re = report_engine_only_drivers
+    def test_report_engine_only_drivers(self, report_engine_only_drivers):
+        new_re, only_drivers_list = report_engine_only_drivers
         obj_data = new_re.get_object_data()
 
-        assert(len(obj_data.keys())) == len(only_drivers_input)
+        assert(len(obj_data.keys())) == len(only_drivers_list)
 
-    def test_report_engine_only_trips(self, report_engine_only_trips, only_trips_input):
-        new_re = report_engine_only_trips
+    def test_report_engine_only_trips(self, report_engine_only_trips):
+        new_re, only_trip_list = report_engine_only_trips
         obj_data = new_re.get_object_data()
 
         assert(len(obj_data.keys())) == 0
 
     def test_default_obj_list_by_mile_order(self, report_engine_default_obj_data):
-        sorted_list = report_engine_default_obj_data.get_drivers_list_by_mile_total()
+        sorted_list = report_engine_default_obj_data[0].get_drivers_list_by_mile_total(
+        )
         driver1 = sorted_list[0]
         driver2 = sorted_list[1]
         driver3 = sorted_list[2]
@@ -71,17 +75,18 @@ class TestReportEngine:
         assert driver1.get_trip_totals()[0] > driver3.get_trip_totals()[0]
 
     def test_default_obj_flat_data_hash_list(self, report_engine_default_obj_data):
-        driver_data_list = report_engine_default_obj_data.get_drivers_list_by_mile_total()
-        flattened_driver_data = report_engine_default_obj_data.get_flat_data_hash_list(driver_data_list)
+        report_eng_obj, input_list = report_engine_default_obj_data
+        driver_data_list = report_eng_obj.get_drivers_list_by_mile_total()
+        flattened_driver_data = report_eng_obj.get_flat_data_hash_list(
+            driver_data_list)
 
         assert type(flattened_driver_data) == list
 
         for data_dict in flattened_driver_data:
             assert type(data_dict) == dict
-            
+
             keys = data_dict.keys()
             for key in keys:
                 assert 'name' in keys
                 assert 'miles' in keys
                 assert 'mph' in keys
-

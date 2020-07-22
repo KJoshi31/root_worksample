@@ -1,11 +1,20 @@
 from consts import DRIVER, TRIP
 
+"""
+    input_validator.py houses the argument_validator
+    method, which verifies if the commands in the input
+    are valid or not. Return a boolean. If there is a formatting
+    issue, there is an exception thrown.
+"""
 
-def argument_validator(input_list):
-    if len(input_list) == 0:
+
+def argument_validator(content_arg):
+    command_array = content_arg.split('\n')
+
+    if len(command_array) == 0:
         return False
 
-    for arg in input_list:
+    for arg in command_array:
         arg_word_list = arg.split()
 
         try:
