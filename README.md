@@ -6,13 +6,14 @@ This project is a work-sample written in Python for candidate assessement by Roo
 #### Table of Contents  
 1. [Setup](#setup) 
     1. [Software Needed](#software-needed)
-    2. [Installation Steps](#Installation-Steps)
+    2. [Installation Steps](#installation-Steps)
 2. [Usage](#Usage)  
     1. [Program Execution](#program-execution)
     2. [Test Execution](#test-execution)
 3. [Expected Output](#expected-output)
 4. [Approach](#approach)
     1. [Files](#Files)
+    2. [Problem Explanation](#problem-explanation)
 
 # Setup
 
@@ -77,7 +78,7 @@ python3 app/main.py input.txt
 In order to run tests for the application, the user is assumed to have the packages from the requirements installed - [command](#req-install). <br>
 [Pytest](https://docs.pytest.org/en/stable/) is used for testing.
 
-Please navigate inside the app directory.
+Please navigate inside the app directory before running pytest:
 ```bash
 cd app/
 ```
@@ -107,3 +108,18 @@ The approach or methodology towards this problem was to break down the key piece
 
 [report_engine.py](https://github.com/KJoshi31/root_worksample/blob/master/app/report_engine.py) houses the ReportEngine class which digests the data from the input file by parsing the commands and creating Driver and Trip objects. Afterwards, ReportEngine creates a structure to be used for additional sorting operations, and then is able to output a string representation of the report. 
 
+## Problem Explanation
+The core problem is that we want to associate Drivers with Trips. After they are associated, we would like to generate the miles per hour (mph) for their total trips associated. 
+This was tackled by creating a Driver object and then having a list of Trip objects within the Driver object. This parent-child relationship solves this symbolic problem we are trying to solve. 
+
+Another challenge was to calculate the average miles per hour for the trips associated with the Driver. To accomplish this, the Driver model has a method called "get_trip_totals". This "get_trip_totals" method returns the total miles and minutes of the trips associated. The "get_trip_totals" calls upon the "get_time_minutes" from each iterated Trip object.
+
+The miles & minutes returned by "get_trip_totals" are used in the following formula to get the average miles per hour for the total Trips per driver:
+(Miles/Minutes) * 60 . 
+
+The "get_time_minutes" method of the trip does the difference on the Trip object's end-time and start-time in seconds to equal the amount of seconds between the time. The seconds between the times is then divided by 60 to get the total minutes. 
+
+The third challenge was to sort the Drivers based on the total miles for the trips associated. The sorting of the data resides in the ReportEngine class. ReportEngine is used to load the data, as well as sort the data for output.
+
+The "get_drivers_list_by_mile_total" method does the sorting 
+of the data loaded into ReportEngine. It sorts by the total miles for each driver in total and returns an ordered list of Driver objects. The sorting is in this seperate method due to there being variability in the future if the developer wants to sort by a different metric instead of total miles or a different way entirely. 
