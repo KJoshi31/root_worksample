@@ -21,7 +21,7 @@ This project is a work-sample written in Python for candidate assessement by Roo
 - [Python3](https://www.python.org/downloads/): language used 
 - [pip (linux)](https://www.tecmint.com/install-pip-in-linux/)
 or [pip (windows)](https://pip.pypa.io/en/stable/installing/#do-i-need-to-install-pip) or [pip (macos)](https://www.poftut.com/how-to-install-pip-on-macos/): python package manager
-- [Virtualenv pip package](https://virtualenv.pypa.io/en/latest/): pip package used to create virtual environments for python projects 
+- [Virtualenv pip package](https://pypi.org/project/virtualenv/): pip package used to create virtual environments for python projects 
 
 ## Installation Steps:
 The following steps assume that the user has installed Python3 in their respective operating system, as well as pip.
@@ -50,7 +50,7 @@ To verify the virtual environment is activated, enter the following command:
 ```bash
 which python
 ```
-Please verify you receive output as the following:
+Please verify you receive output similar to the following:
 ```bash
 ...../env/bin/python
 ```
@@ -75,7 +75,7 @@ python3 app/main.py input.txt
 ```
 
 ### Test Execution
-In order to run tests for the application, the user is assumed to have the packages from the requirements installed - [command](#req-install). <br>
+In order to run tests for the application, the user is assumed to have the packages from the requirements.txt installed - [command](#req-install). <br>
 [Pytest](https://docs.pytest.org/en/stable/) is used for testing.
 
 Please navigate inside the app directory before running pytest:
@@ -87,7 +87,7 @@ Tests can be executed with the following command, which is just the invocation o
 pytest
 ```
 ## Expected Output
-This is the expected output after setting up and running the work-sample program:
+This is the expected output after setting up and running the work-sample program with the input.txt file:
 ```
 Lauren: 42 miles @ 34 mph
 Dan:    39 miles @ 47 mph
@@ -95,7 +95,7 @@ Kumi:   0 miles
 ```
 
 # Approach
-The approach or methodology towards this problem was to break down the key pieces/components into modular and reusable pieces of code that could be extended upon if need be. 
+The approach or methodology towards this problem was to break down the key pieces/components into modular and reusable pieces of code. 
 
 ## Files
 [main.py](https://github.com/KJoshi31/root_worksample/blob/master/app/main.py) is the entrypoint of the program which uses other modules of the application to successfully output the reporting data to the end-user. 
@@ -110,7 +110,7 @@ The approach or methodology towards this problem was to break down the key piece
 
 ## Problem Explanation
 The core problem is that we want to associate Drivers with Trips. After they are associated, we would like to generate the miles per hour (mph) for their total trips associated. 
-This was tackled by creating a Driver object and then having a list of Trip objects within the Driver object. This parent-child relationship solves this symbolic problem we are trying to solve. 
+This was tackled by creating a Driver object and then having a list of Trip objects within the Driver object. This parent-child relationship solves this symbolic problem we are trying to solve.
 
 Another challenge was to calculate the average miles per hour for the trips associated with the Driver. To accomplish this, the Driver model has a method called "get_trip_totals". This "get_trip_totals" method returns the total miles and minutes of the trips associated. The "get_trip_totals" calls upon the "get_time_minutes" from each iterated Trip object.
 
@@ -119,9 +119,9 @@ The miles & minutes returned by "get_trip_totals" are used in the following form
 
 The "get_time_minutes" method of the trip does the difference on the Trip object's end-time and start-time in seconds to equal the amount of seconds between the time. The seconds between the times is then divided by 60 to get the total minutes. 
 
-The third challenge was to sort the Drivers based on the total miles for the trips associated. The sorting of the data resides in the ReportEngine class. ReportEngine is used to load the data, as well as sort the data for output.
+The third challenge was to sort the Drivers based on the total miles for the trips associated. The sorting of the data resides in the ReportEngine class. ReportEngine is used to load the data, sort the data, and generate the report for output. 
 
 The "get_drivers_list_by_mile_total" method does the sorting 
 of the data loaded into ReportEngine. It sorts by the total miles for each driver in total and returns an ordered list of Driver objects. The sorting is in this seperate method due to there being variability in the future if the developer wants to sort by a different metric instead of total miles or a different way entirely. 
 
-The focus on the solution was for modularity and extensibility for future additions if need be. Hence, each class has their own responsibilities for the overarching project. For further details about the project, please refer to the docstrings within each class, function, and method. 
+The focus on the solution was for modularity and extensibility for future additions if need be. Hence, each class has its own responsibilities for the overarching project. For further details about the project, please refer to the docstrings within each class, function, and method. 
