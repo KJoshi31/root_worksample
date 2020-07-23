@@ -123,3 +123,5 @@ The third challenge was to sort the Drivers based on the total miles for the tri
 
 The "get_drivers_list_by_mile_total" method does the sorting 
 of the data loaded into ReportEngine. It sorts by the total miles for each driver in total and returns an ordered list of Driver objects. The sorting is in this seperate method due to there being variability in the future if the developer wants to sort by a different metric instead of total miles or a different way entirely. 
+
+The focus on the solution was for modularity and extensibility for future additions if need be. Hence, each class has their own responsibilities for the overarching project. For further details about the project, please refer to the docstrings within each class, function, and method. 
